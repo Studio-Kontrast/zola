@@ -13,15 +13,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Copy temporary env for build
-COPY .env.build.local .env.local
-
+# Copy .env.local (présent dans le repo)
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
-
-# Remove temporary env
-RUN rm -f .env.local
 
 # Verify standalone build
 RUN ls -la .next/ && \
