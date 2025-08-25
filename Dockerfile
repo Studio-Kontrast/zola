@@ -21,7 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy all project files
 COPY . .
 
-# Set Next.js telemetry to disabled
+# Disable Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Build the application
@@ -34,7 +34,7 @@ RUN ls -la .next/ && \
       exit 1; \
     fi
 
-# Production image, copy all the files and run next
+# Production image
 FROM base AS runner
 WORKDIR /app
 
@@ -60,12 +60,10 @@ USER nextjs
 
 # Expose application port
 EXPOSE 3000
-
-# Set environment variable for port
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
-# Health check to verify container is running properly
+# Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
 
