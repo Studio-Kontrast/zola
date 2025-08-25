@@ -24,6 +24,9 @@ COPY . .
 # Set Next.js telemetry to disabled
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Copy environment file for build
+COPY .env.local .env.local
+
 # Build the application
 RUN npm run build
 
